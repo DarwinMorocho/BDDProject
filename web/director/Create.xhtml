@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DirectorCreateDlg" widgetVar="DirectorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDirectorTitle}">
+            <h:form id="DirectorCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{directorController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDirectorLabel_dirNombre}" for="dirNombre" />
+                        <p:inputText id="dirNombre" value="#{directorController.selected.dirNombre}" title="#{bundle.CreateDirectorTitle_dirNombre}" required="true" requiredMessage="#{bundle.CreateDirectorRequiredMessage_dirNombre}"/>
+                        <p:outputLabel value="#{bundle.CreateDirectorLabel_nacionalidad}" for="nacionalidad" />
+                        <p:selectOneMenu id="nacionalidad" value="#{directorController.selected.nacionalidad}" required="true" requiredMessage="#{bundle.EditDirectorRequiredMessage_nacionalidad}">
+                            <f:selectItems value="#{nacionalidadController.itemsAvailableSelectOne}"
+                                           var="nacionalidadItem"
+                                           itemValue="#{nacionalidadItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{directorController.create}" value="#{bundle.Save}" update="display,:DirectorListForm:datalist,:growl" oncomplete="handleSubmit(args,'DirectorCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DirectorCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

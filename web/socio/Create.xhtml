@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SocioCreateDlg" widgetVar="SocioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSocioTitle}">
+            <h:form id="SocioCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{socioController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_dniSocio}" for="dniSocio" />
+                        <p:inputText id="dniSocio" value="#{socioController.selected.dniSocio}" title="#{bundle.CreateSocioTitle_dniSocio}" required="true" requiredMessage="#{bundle.CreateSocioRequiredMessage_dniSocio}"/>
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_socNombre}" for="socNombre" />
+                        <p:inputText id="socNombre" value="#{socioController.selected.socNombre}" title="#{bundle.CreateSocioTitle_socNombre}" required="true" requiredMessage="#{bundle.CreateSocioRequiredMessage_socNombre}"/>
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_socDireccion}" for="socDireccion" />
+                        <p:inputText id="socDireccion" value="#{socioController.selected.socDireccion}" title="#{bundle.CreateSocioTitle_socDireccion}" required="true" requiredMessage="#{bundle.CreateSocioRequiredMessage_socDireccion}"/>
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_socTelefono}" for="socTelefono" />
+                        <p:inputText id="socTelefono" value="#{socioController.selected.socTelefono}" title="#{bundle.CreateSocioTitle_socTelefono}" required="true" requiredMessage="#{bundle.CreateSocioRequiredMessage_socTelefono}"/>
+                        <p:outputLabel value="#{bundle.CreateSocioLabel_socAvalaSocio}" for="socAvalaSocio" />
+                        <p:selectOneMenu id="socAvalaSocio" value="#{socioController.selected.socAvalaSocio}" >
+                            <f:selectItems value="#{socioController.itemsAvailableSelectOne}"
+                                           var="socAvalaSocioItem"
+                                           itemValue="#{socAvalaSocioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{socioController.create}" value="#{bundle.Save}" update="display,:SocioListForm:datalist,:growl" oncomplete="handleSubmit(args,'SocioCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SocioCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

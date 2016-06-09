@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AlquilaCreateDlg" widgetVar="AlquilaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateAlquilaTitle}">
+            <h:form id="AlquilaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{alquilaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateAlquilaLabel_alquilaPK_fechaAlquiler}" for="alquilaPK_fechaAlquiler" />
+                        <p:calendar id="alquilaPK_fechaAlquiler" pattern="MM/dd/yyyy HH:mm:ss" value="#{alquilaController.selected.alquilaPK.fechaAlquiler}" title="#{bundle.EditAlquilaTitle_alquilaPK_fechaAlquiler}" required="true" requiredMessage="#{bundle.EditAlquilaRequiredMessage_alquilaPK_fechaAlquiler}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateAlquilaLabel_fechaDevolucion}" for="fechaDevolucion" />
+                        <p:calendar id="fechaDevolucion" pattern="MM/dd/yyyy HH:mm:ss" value="#{alquilaController.selected.fechaDevolucion}" title="#{bundle.EditAlquilaTitle_fechaDevolucion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateAlquilaLabel_ejemplar}" for="ejemplar" />
+                        <p:selectOneMenu id="ejemplar" value="#{alquilaController.selected.ejemplar}" required="true" requiredMessage="#{bundle.EditAlquilaRequiredMessage_ejemplar}">
+                            <f:selectItems value="#{ejemplarController.itemsAvailableSelectOne}"
+                                           var="ejemplarItem"
+                                           itemValue="#{ejemplarItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateAlquilaLabel_socio}" for="socio" />
+                        <p:selectOneMenu id="socio" value="#{alquilaController.selected.socio}" required="true" requiredMessage="#{bundle.EditAlquilaRequiredMessage_socio}">
+                            <f:selectItems value="#{socioController.itemsAvailableSelectOne}"
+                                           var="socioItem"
+                                           itemValue="#{socioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{alquilaController.create}" value="#{bundle.Save}" update="display,:AlquilaListForm:datalist,:growl" oncomplete="handleSubmit(args,'AlquilaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AlquilaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

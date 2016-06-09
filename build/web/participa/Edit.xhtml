@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ParticipaEditDlg" widgetVar="ParticipaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditParticipaTitle}">
+            <h:form id="ParticipaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{participaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditParticipaLabel_tipoParticipacion}" for="tipoParticipacion" />
+                        <p:inputText id="tipoParticipacion" value="#{participaController.selected.tipoParticipacion}" title="#{bundle.EditParticipaTitle_tipoParticipacion}" required="true" requiredMessage="#{bundle.EditParticipaRequiredMessage_tipoParticipacion}"/>
+                        <p:outputLabel value="#{bundle.EditParticipaLabel_actor}" for="actor" />
+                        <p:selectOneMenu id="actor" value="#{participaController.selected.actor}" required="true" requiredMessage="#{bundle.EditParticipaRequiredMessage_actor}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{actorController.itemsAvailableSelectOne}"
+                                           var="actorItem"
+                                           itemValue="#{actorItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditParticipaLabel_pelicula}" for="pelicula" />
+                        <p:selectOneMenu id="pelicula" value="#{participaController.selected.pelicula}" required="true" requiredMessage="#{bundle.EditParticipaRequiredMessage_pelicula}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{peliculaController.itemsAvailableSelectOne}"
+                                           var="peliculaItem"
+                                           itemValue="#{peliculaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{participaController.update}" value="#{bundle.Save}" update="display,:ParticipaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ParticipaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ParticipaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NacionalidadCreateDlg" widgetVar="NacionalidadCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateNacionalidadTitle}">
+            <h:form id="NacionalidadCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{nacionalidadController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateNacionalidadLabel_idNacionalidad}" for="idNacionalidad" />
+                        <p:inputText id="idNacionalidad" value="#{nacionalidadController.selected.idNacionalidad}" title="#{bundle.CreateNacionalidadTitle_idNacionalidad}" required="true" requiredMessage="#{bundle.CreateNacionalidadRequiredMessage_idNacionalidad}"/>
+                        <p:outputLabel value="#{bundle.CreateNacionalidadLabel_nacionalidad}" for="nacionalidad" />
+                        <p:inputText id="nacionalidad" value="#{nacionalidadController.selected.nacionalidad}" title="#{bundle.CreateNacionalidadTitle_nacionalidad}" required="true" requiredMessage="#{bundle.CreateNacionalidadRequiredMessage_nacionalidad}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{nacionalidadController.create}" value="#{bundle.Save}" update="display,:NacionalidadListForm:datalist,:growl" oncomplete="handleSubmit(args,'NacionalidadCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="NacionalidadCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

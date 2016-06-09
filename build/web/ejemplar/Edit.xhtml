@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EjemplarEditDlg" widgetVar="EjemplarEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditEjemplarTitle}">
+            <h:form id="EjemplarEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{ejemplarController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditEjemplarLabel_ejemplarPK_ejeNumEjemplar}" for="ejemplarPK_ejeNumEjemplar" />
+                        <p:inputText id="ejemplarPK_ejeNumEjemplar" value="#{ejemplarController.selected.ejemplarPK.ejeNumEjemplar}" title="#{bundle.EditEjemplarTitle_ejemplarPK_ejeNumEjemplar}" required="true" requiredMessage="#{bundle.EditEjemplarRequiredMessage_ejemplarPK_ejeNumEjemplar}"/>
+                        <p:outputLabel value="#{bundle.EditEjemplarLabel_ejeConservacion}" for="ejeConservacion" />
+                        <p:inputText id="ejeConservacion" value="#{ejemplarController.selected.ejeConservacion}" title="#{bundle.EditEjemplarTitle_ejeConservacion}" required="true" requiredMessage="#{bundle.EditEjemplarRequiredMessage_ejeConservacion}"/>
+                        <p:outputLabel value="#{bundle.EditEjemplarLabel_alquilado}" for="alquilado" />
+                        <p:selectBooleanCheckbox id="alquilado" value="#{ejemplarController.selected.alquilado}" required="true" requiredMessage="#{bundle.EditEjemplarRequiredMessage_alquilado}"/>
+                        <p:outputLabel value="#{bundle.EditEjemplarLabel_pelicula}" for="pelicula" />
+                        <p:selectOneMenu id="pelicula" value="#{ejemplarController.selected.pelicula}" required="true" requiredMessage="#{bundle.EditEjemplarRequiredMessage_pelicula}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{peliculaController.itemsAvailableSelectOne}"
+                                           var="peliculaItem"
+                                           itemValue="#{peliculaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{ejemplarController.update}" value="#{bundle.Save}" update="display,:EjemplarListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EjemplarEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EjemplarEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
